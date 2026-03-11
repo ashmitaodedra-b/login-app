@@ -8,8 +8,12 @@ export async function forgotPasswordAction(formData: FormData) {
 
   const supabase = await createClient();
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/reset-password`,
+    // Must go through /auth/callback so the PKCE code is exchanged for a
+    // session before the user reaches the reset-password form.
+    redirectTo: `${siteUrl}/auth/callback?next=/reset-password`,
   });
 
   if (error) {

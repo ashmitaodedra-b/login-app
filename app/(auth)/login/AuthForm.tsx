@@ -230,12 +230,18 @@ function PasswordToggle({ show, onToggle }: { show: boolean; onToggle: () => voi
     <button
       type="button"
       onClick={onToggle}
-      className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-placeholder hover:text-ink-secondary transition-colors"
       aria-label={show ? "Hide password" : "Show password"}
+      aria-pressed={show}
+      className="absolute right-3 top-1/2 -translate-y-1/2
+                 p-1.5 rounded-button
+                 text-ink-placeholder hover:text-ink-secondary
+                 hover:bg-surface-muted active:bg-border
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus/30
+                 transition-all"
     >
       {show
-        ? <EyeOff className="h-5 w-5" />
-        : <Eye    className="h-5 w-5" />
+        ? <EyeOff className="h-4 w-4" />
+        : <Eye    className="h-4 w-4" />
       }
     </button>
   );
