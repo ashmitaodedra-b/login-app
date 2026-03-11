@@ -6,14 +6,80 @@
   *, *::before, *::after {
     box-sizing: border-box;
   }
+
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
   body {
-    @apply bg-white text-[#333];
+    @apply bg-surface text-ink font-sans;
   }
-  input::placeholder {
-    opacity: 0.3;
+
+  /* Placeholders use the design-system token — no opacity override */
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-ink-placeholder;
+    opacity: 1;
+  }
+}
+
+@layer components {
+  /* ── Input ─────────────────────────────────────── */
+  .ds-input {
+    @apply w-full bg-surface-muted rounded-input px-4 py-3
+           text-base text-ink placeholder-ink-placeholder
+           border border-transparent
+           outline-none transition
+           focus:bg-surface focus:border-border-focus focus:ring-2 focus:ring-border-focus/10;
+  }
+
+  /* ── Button: primary (black) ────────────────────── */
+  .ds-btn-primary {
+    @apply w-full bg-surface-inverse text-ink-inverse text-base font-medium
+           rounded-button px-4 py-3
+           hover:bg-ink/80 active:bg-ink
+           transition-colors
+           disabled:opacity-60 disabled:cursor-not-allowed
+           flex items-center justify-center gap-2;
+  }
+
+  /* ── Button: secondary (ghost / outlined) ───────── */
+  .ds-btn-secondary {
+    @apply w-full bg-surface text-ink text-base font-medium
+           rounded-button px-4 py-3
+           border border-border
+           hover:bg-surface-subtle active:bg-surface-muted
+           transition-colors
+           flex items-center justify-center gap-2;
+  }
+
+  /* ── Button: brand ──────────────────────────────── */
+  .ds-btn-brand {
+    @apply bg-brand text-brand-fg text-base font-normal
+           rounded-pill px-8 py-2
+           hover:bg-brand-hover active:bg-brand-dark
+           transition-colors;
+  }
+
+  /* ── Status banners ─────────────────────────────── */
+  .ds-banner-error {
+    @apply rounded-input border border-error-border bg-error-bg
+           px-4 py-3 text-base text-error-text;
+  }
+
+  .ds-banner-success {
+    @apply rounded-input border border-success-border bg-success-bg
+           px-4 py-3 text-base text-success-text;
+  }
+
+  /* ── Form label ─────────────────────────────────── */
+  .ds-label {
+    @apply text-label text-ink;
+  }
+
+  /* ── Form field wrapper ──────────────────────────── */
+  .ds-field {
+    @apply flex flex-col gap-1.5;
   }
 }
