@@ -28,8 +28,8 @@ export function BrandPanel() {
           </p>
         </div>
 
-        {/* btn-accent + pill shape override for brand panel */}
-        <button type="button" className="btn-accent rounded-pill w-fit px-8 py-2 text-sm">
+        {/* outlined · inverse · sm · pill — white border/text on dark gradient */}
+        <button type="button" className="btn-outlined-inverse btn-sm rounded-pill w-fit">
           Read More
           <ChevronRight className="h-4 w-4" />
         </button>

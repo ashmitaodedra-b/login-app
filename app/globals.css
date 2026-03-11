@@ -6,17 +6,13 @@
   *, *::before, *::after {
     box-sizing: border-box;
   }
-
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
   body {
     @apply bg-surface text-ink font-sans;
   }
-
-  /* Placeholders use the design-system token — no opacity override */
   input::placeholder,
   textarea::placeholder {
     @apply text-ink-placeholder;
@@ -25,72 +21,207 @@
 }
 
 @layer components {
-  /* ─────────────────────────────────────────────────────────────
-     BUTTONS
-     Three variants — primary, secondary, accent.
-     All share the same padding/size base; only color differs.
-  ───────────────────────────────────────────────────────────── */
 
+  /* ═══════════════════════════════════════════════════════════════
+     BUTTON SYSTEM  —  MUI-inspired: variant × color × size
+     ─────────────────────────────────────────────────────────────
+     Usage:
+       <button class="btn-contained btn-primary btn-md">Save</button>
+       <button class="btn-outlined  btn-accent  btn-sm">View</button>
+       <button class="btn-text      btn-danger  btn-lg">Delete</button>
+
+     Modifiers:
+       w-full      → stretch to container width
+       rounded-pill → pill / capsule shape override
+  ═══════════════════════════════════════════════════════════════ */
+
+  /* ── Base (shared layout, shape, motion, disabled) ──────────── */
   .btn {
     @apply inline-flex items-center justify-center gap-2
-           px-4 py-3 text-base font-medium
-           rounded-button transition-colors
-           disabled:opacity-60 disabled:cursor-not-allowed;
+           font-medium leading-none select-none
+           rounded-button border border-transparent
+           transition-all duration-150 ease-in-out
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  /** Primary — black fill, white text. Main call-to-action. */
-  .btn-primary {
-    @apply btn w-full
-           bg-surface-inverse text-ink-inverse
-           hover:bg-ink/80 active:bg-ink;
+  /* ── Sizes ──────────────────────────────────────────────────── */
+  /** Small  — icon buttons, compact actions, chips */
+  .btn-sm { @apply btn px-3    py-1.5  text-micro; }
+
+  /** Medium — default form/card buttons             */
+  .btn-md { @apply btn px-4    py-2.5  text-base;  }
+
+  /** Large  — hero / full-width CTA buttons          */
+  .btn-lg { @apply btn px-6    py-3.5  text-lead;  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     CONTAINED  (filled background, elevated look)
+  ══════════════════════════════════════════════════════════════ */
+
+  /** Contained · Primary — black fill, white text */
+  .btn-contained-primary {
+    @apply bg-ink text-ink-inverse
+           hover:bg-ink/85 active:bg-ink
+           focus-visible:ring-ink/40
+           shadow-card hover:shadow-panel;
   }
 
-  /** Secondary — white fill, border. Supporting actions / OAuth. */
-  .btn-secondary {
-    @apply btn w-full
-           bg-surface text-ink
-           border border-border
-           hover:bg-surface-subtle active:bg-surface-muted;
+  /** Contained · Secondary — muted fill, dark text */
+  .btn-contained-secondary {
+    @apply bg-surface-muted text-ink
+           hover:bg-border active:bg-border-strong
+           focus-visible:ring-border/60;
   }
 
-  /** Accent — brand-blue fill, white text. Brand-coloured actions. */
-  .btn-accent {
-    @apply btn
-           bg-brand text-brand-fg
-           hover:bg-brand-hover active:bg-brand-dark;
+  /** Contained · Accent — brand-blue fill, white text */
+  .btn-contained-accent {
+    @apply bg-brand text-brand-fg
+           hover:bg-brand-hover active:bg-brand-dark
+           focus-visible:ring-brand/40
+           shadow-card hover:shadow-panel;
   }
 
-  /* ─────────────────────────────────────────────────────────────
+  /** Contained · Danger — error-red fill, white text */
+  .btn-contained-danger {
+    @apply bg-error text-white
+           hover:bg-error/85 active:bg-error/95
+           focus-visible:ring-error/40
+           shadow-card hover:shadow-panel;
+  }
+
+  /** Contained · Success — green fill, white text */
+  .btn-contained-success {
+    @apply bg-success text-white
+           hover:bg-success/85 active:bg-success/95
+           focus-visible:ring-success/40
+           shadow-card hover:shadow-panel;
+  }
+
+  /** Contained · Inverse — white fill, dark text (use on dark surfaces) */
+  .btn-contained-inverse {
+    @apply bg-surface text-ink
+           hover:bg-surface-subtle active:bg-surface-muted
+           focus-visible:ring-surface/60
+           shadow-card hover:shadow-panel;
+  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     OUTLINED  (transparent bg, colored border + text)
+  ══════════════════════════════════════════════════════════════ */
+
+  /** Outlined · Primary — ink border + text */
+  .btn-outlined-primary {
+    @apply border-ink text-ink
+           bg-transparent hover:bg-ink/5 active:bg-ink/10
+           focus-visible:ring-ink/30;
+  }
+
+  /** Outlined · Secondary — muted border, secondary text */
+  .btn-outlined-secondary {
+    @apply border-border text-ink-secondary
+           bg-transparent hover:bg-surface-muted active:bg-border
+           focus-visible:ring-border/50;
+  }
+
+  /** Outlined · Accent — brand border + text */
+  .btn-outlined-accent {
+    @apply border-brand text-brand
+           bg-transparent hover:bg-brand/5 active:bg-brand/10
+           focus-visible:ring-brand/30;
+  }
+
+  /** Outlined · Danger — error border + text */
+  .btn-outlined-danger {
+    @apply border-error text-error-text
+           bg-transparent hover:bg-error/5 active:bg-error/10
+           focus-visible:ring-error/30;
+  }
+
+  /** Outlined · Success — success border + text */
+  .btn-outlined-success {
+    @apply border-success text-success-text
+           bg-transparent hover:bg-success/5 active:bg-success/10
+           focus-visible:ring-success/30;
+  }
+
+  /** Outlined · Inverse — white border + white text (use on dark surfaces) */
+  .btn-outlined-inverse {
+    @apply border-brand-fg text-brand-fg
+           bg-transparent hover:bg-brand-fg/10 active:bg-brand-fg/20
+           focus-visible:ring-brand-fg/30;
+  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     TEXT  (no bg, no border — inline / ghost actions)
+  ══════════════════════════════════════════════════════════════ */
+
+  /** Text · Primary — ink-coloured text */
+  .btn-text-primary {
+    @apply text-ink
+           hover:bg-ink/5 active:bg-ink/10
+           focus-visible:ring-ink/20;
+  }
+
+  /** Text · Secondary — muted text */
+  .btn-text-secondary {
+    @apply text-ink-secondary
+           hover:bg-surface-muted active:bg-border
+           focus-visible:ring-border/40;
+  }
+
+  /** Text · Accent — brand-blue text */
+  .btn-text-accent {
+    @apply text-brand
+           hover:bg-brand/5 active:bg-brand/10
+           focus-visible:ring-brand/20;
+  }
+
+  /** Text · Danger — error-red text */
+  .btn-text-danger {
+    @apply text-error-text
+           hover:bg-error/5 active:bg-error/10
+           focus-visible:ring-error/20;
+  }
+
+  /** Text · Inverse — white text (use on dark surfaces) */
+  .btn-text-inverse {
+    @apply text-brand-fg
+           hover:bg-brand-fg/10 active:bg-brand-fg/20
+           focus-visible:ring-brand-fg/20;
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════════
      FORM PRIMITIVES
-  ───────────────────────────────────────────────────────────── */
+  ═══════════════════════════════════════════════════════════════ */
 
   .ds-input {
     @apply w-full bg-surface-muted rounded-input px-4 py-3
            text-base text-ink placeholder-ink-placeholder
-           border border-transparent
-           outline-none transition
-           focus:bg-surface focus:border-border-focus focus:ring-2 focus:ring-border-focus/10;
+           border border-transparent outline-none transition
+           focus:bg-surface focus:border-border-focus
+           focus:ring-2 focus:ring-border-focus/10;
   }
 
-  .ds-label {
-    @apply text-label text-ink;
-  }
+  .ds-label  { @apply text-label text-ink; }
+  .ds-field  { @apply flex flex-col gap-1.5; }
 
-  .ds-field {
-    @apply flex flex-col gap-1.5;
-  }
 
-  /* ─────────────────────────────────────────────────────────────
+  /* ═══════════════════════════════════════════════════════════════
      STATUS BANNERS
-  ───────────────────────────────────────────────────────────── */
+  ═══════════════════════════════════════════════════════════════ */
 
   .ds-banner-error {
-    @apply rounded-input border border-error-border bg-error-bg
-           px-4 py-3 text-base text-error-text;
+    @apply rounded-input border border-error-border
+           bg-error-bg px-4 py-3 text-base text-error-text;
   }
 
   .ds-banner-success {
-    @apply rounded-input border border-success-border bg-success-bg
-           px-4 py-3 text-base text-success-text;
+    @apply rounded-input border border-success-border
+           bg-success-bg px-4 py-3 text-base text-success-text;
   }
 }
