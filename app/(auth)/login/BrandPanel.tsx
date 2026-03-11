@@ -1,7 +1,9 @@
+import { ChevronRight } from "lucide-react";
+
 export function BrandPanel() {
   return (
     <aside className="hidden lg:flex relative w-[860px] flex-shrink-0 flex-col justify-center overflow-hidden bg-gradient-to-b from-brand via-brand-dark to-brand-darker">
-      {/* Decorative circle outlines — bottom left */}
+      {/* Decorative circle outlines */}
       <div className="pointer-events-none absolute -bottom-16 -left-52 w-[638px] h-[583px]">
         <svg
           viewBox="0 0 638 583"
@@ -18,7 +20,7 @@ export function BrandPanel() {
       {/* Content */}
       <div className="relative z-10 flex flex-col gap-6 px-20 mt-8">
         <div className="flex flex-col gap-4">
-          <h1 className="text-heading font-bold text-brand-fg leading-tight tracking-tight">
+          <h1 className="text-heading text-brand-fg leading-tight tracking-tight">
             GoFinance
           </h1>
           <p className="text-lead font-medium text-brand-fg leading-snug">
@@ -26,8 +28,10 @@ export function BrandPanel() {
           </p>
         </div>
 
-        <button type="button" className="ds-btn-brand w-fit">
+        {/* btn-accent + pill shape override for brand panel */}
+        <button type="button" className="btn-accent rounded-pill w-fit px-8 py-2 text-sm">
           Read More
+          <ChevronRight className="h-4 w-4" />
         </button>
       </div>
     </aside>

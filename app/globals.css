@@ -25,7 +25,45 @@
 }
 
 @layer components {
-  /* ── Input ─────────────────────────────────────── */
+  /* ─────────────────────────────────────────────────────────────
+     BUTTONS
+     Three variants — primary, secondary, accent.
+     All share the same padding/size base; only color differs.
+  ───────────────────────────────────────────────────────────── */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-3 text-base font-medium
+           rounded-button transition-colors
+           disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  /** Primary — black fill, white text. Main call-to-action. */
+  .btn-primary {
+    @apply btn w-full
+           bg-surface-inverse text-ink-inverse
+           hover:bg-ink/80 active:bg-ink;
+  }
+
+  /** Secondary — white fill, border. Supporting actions / OAuth. */
+  .btn-secondary {
+    @apply btn w-full
+           bg-surface text-ink
+           border border-border
+           hover:bg-surface-subtle active:bg-surface-muted;
+  }
+
+  /** Accent — brand-blue fill, white text. Brand-coloured actions. */
+  .btn-accent {
+    @apply btn
+           bg-brand text-brand-fg
+           hover:bg-brand-hover active:bg-brand-dark;
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     FORM PRIMITIVES
+  ───────────────────────────────────────────────────────────── */
+
   .ds-input {
     @apply w-full bg-surface-muted rounded-input px-4 py-3
            text-base text-ink placeholder-ink-placeholder
@@ -34,35 +72,18 @@
            focus:bg-surface focus:border-border-focus focus:ring-2 focus:ring-border-focus/10;
   }
 
-  /* ── Button: primary (black) ────────────────────── */
-  .ds-btn-primary {
-    @apply w-full bg-surface-inverse text-ink-inverse text-base font-medium
-           rounded-button px-4 py-3
-           hover:bg-ink/80 active:bg-ink
-           transition-colors
-           disabled:opacity-60 disabled:cursor-not-allowed
-           flex items-center justify-center gap-2;
+  .ds-label {
+    @apply text-label text-ink;
   }
 
-  /* ── Button: secondary (ghost / outlined) ───────── */
-  .ds-btn-secondary {
-    @apply w-full bg-surface text-ink text-base font-medium
-           rounded-button px-4 py-3
-           border border-border
-           hover:bg-surface-subtle active:bg-surface-muted
-           transition-colors
-           flex items-center justify-center gap-2;
+  .ds-field {
+    @apply flex flex-col gap-1.5;
   }
 
-  /* ── Button: brand ──────────────────────────────── */
-  .ds-btn-brand {
-    @apply bg-brand text-brand-fg text-base font-normal
-           rounded-pill px-8 py-2
-           hover:bg-brand-hover active:bg-brand-dark
-           transition-colors;
-  }
+  /* ─────────────────────────────────────────────────────────────
+     STATUS BANNERS
+  ───────────────────────────────────────────────────────────── */
 
-  /* ── Status banners ─────────────────────────────── */
   .ds-banner-error {
     @apply rounded-input border border-error-border bg-error-bg
            px-4 py-3 text-base text-error-text;
@@ -71,15 +92,5 @@
   .ds-banner-success {
     @apply rounded-input border border-success-border bg-success-bg
            px-4 py-3 text-base text-success-text;
-  }
-
-  /* ── Form label ─────────────────────────────────── */
-  .ds-label {
-    @apply text-label text-ink;
-  }
-
-  /* ── Form field wrapper ──────────────────────────── */
-  .ds-field {
-    @apply flex flex-col gap-1.5;
   }
 }

@@ -1,3 +1,4 @@
+import { LogOut } from "lucide-react";
 import { signOutAction } from "./actions";
 
 export default function DashboardPage() {
@@ -7,7 +8,8 @@ export default function DashboardPage() {
         <h1 className="text-title text-ink">Dashboard</h1>
         <p className="text-base text-ink-muted">You are signed in.</p>
         <form action={signOutAction}>
-          <button type="submit" className="ds-btn-brand px-8 py-3">
+          <button type="submit" className="btn-accent rounded-pill px-8 py-3">
+            <LogOut className="h-4 w-4" />
             Sign Out
           </button>
         </form>
